@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubham Limkar — DevOps &amp; Site Reliability Engineer</title>
+<meta name="description" content="Shubham Limkar — DevOps & Site Reliability Engineer. AWS, Azure, Kubernetes, Terraform, CI/CD.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2300e5a0%22>&gt;_</text></svg>">
+<style>
+  :root{
+    --bg:#0a0e14;
+    --bg-alt:#0f1420;
+    --panel:#111827;
+    --border:#1f2937;
+    --text:#e5e9f0;
+    --text-dim:#8b93a7;
+    --accent:#00e5a0;
+    --accent-dim:#00a377;
+    --accent-glow:rgba(0,229,160,.15);
+    --mono:'JetBrains Mono','Fira Code',Consolas,'Courier New',monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --maxw:960px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    background-image:
+      radial-gradient(circle at 15% 0%, var(--accent-glow), transparent 35%),
+      radial-gradient(circle at 85% 15%, rgba(0,150,255,.08), transparent 35%);
+    background-attachment:fixed;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  ::selection{background:var(--accent);color:#04120c}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* Nav */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,14,20,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:var(--maxw);margin:0 auto}
+  .logo{font-family:var(--mono);font-weight:700;color:var(--text);font-size:1.05rem}
+  .logo span{color:var(--accent)}
+  .navlinks{display:flex;gap:28px;list-style:none;font-family:var(--mono);font-size:.85rem}
+  .navlinks a{color:var(--text-dim)}
+  .navlinks a:hover{color:var(--accent);text-decoration:none}
+  .navlinks .num{color:var(--accent-dim);margin-right:4px}
+  .navtoggle{display:none;background:none;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:6px 10px;font-family:var(--mono);cursor:pointer}
+
+  /* Hero */
+  .hero{padding:110px 0 90px;max-width:var(--maxw);margin:0 auto;padding-left:24px;padding-right:24px}
+  .eyebrow{font-family:var(--mono);color:var(--accent);font-size:.9rem;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:'';width:28px;height:1px;background:var(--accent-dim)}
+  h1{font-size:clamp(2.1rem,5vw,3.4rem);font-weight:800;letter-spacing:-.02em;color:var(--text)}
+  h1 .accent{color:var(--accent)}
+  .role{font-family:var(--mono);font-size:clamp(1.1rem,2.5vw,1.5rem);color:var(--text-dim);margin-top:10px}
+  .summary{max-width:640px;color:var(--text-dim);margin-top:22px;font-size:1.02rem}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .badge{font-family:var(--mono);font-size:.78rem;color:var(--accent);border:1px solid var(--accent-dim);padding:4px 10px;border-radius:20px;background:var(--accent-glow)}
+  .hero-cta{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-size:.9rem;padding:12px 22px;border-radius:8px;border:1px solid var(--accent-dim);transition:all .2s}
+  .btn-primary{background:var(--accent);color:#04120c;font-weight:600}
+  .btn-primary:hover{background:var(--accent-dim);text-decoration:none;transform:translateY(-1px)}
+  .btn-ghost{color:var(--text);border-color:var(--border)}
+  .btn-ghost:hover{border-color:var(--accent-dim);color:var(--accent);text-decoration:none}
+
+  /* Section shell */
+  section{padding:70px 0}
+  .section-head{display:flex;align-items:center;gap:16px;margin-bottom:36px}
+  .section-head h2{font-family:var(--mono);font-size:1.5rem;color:var(--text);white-space:nowrap}
+  .section-head .idx{color:var(--accent)}
+  .section-head .line{height:1px;background:var(--border);flex:1}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .about-grid p{color:var(--text-dim);margin-bottom:14px}
+  .facts{list-style:none;font-family:var(--mono);font-size:.88rem;color:var(--text-dim)}
+  .facts li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--border)}
+  .facts li span:first-child{color:var(--text)}
+
+  /* Experience timeline */
+  .timeline{position:relative;padding-left:28px;border-left:2px solid var(--border)}
+  .tl-item{position:relative;padding-bottom:44px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{content:'';position:absolute;left:-34px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+  .tl-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+  .tl-role{font-weight:700;font-size:1.05rem;color:var(--text)}
+  .tl-company{color:var(--accent);font-family:var(--mono);font-size:.92rem}
+  .tl-date{font-family:var(--mono);font-size:.8rem;color:var(--text-dim);white-space:nowrap}
+  .tl-item ul{margin-top:10px;padding-left:18px;color:var(--text-dim);font-size:.94rem}
+  .tl-item li{margin-bottom:6px}
+  .tl-item li::marker{color:var(--accent-dim)}
+
+  /* Projects */
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:26px;transition:border-color .2s,transform .2s}
+  .card:hover{border-color:var(--accent-dim);transform:translateY(-2px)}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+  .card h3{font-size:1.1rem;color:var(--text)}
+  .card .date{font-family:var(--mono);font-size:.75rem;color:var(--text-dim);white-space:nowrap}
+  .card p{color:var(--text-dim);font-size:.92rem;margin-bottom:14px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-family:var(--mono);font-size:.72rem;color:var(--accent);background:var(--accent-glow);padding:3px 8px;border-radius:5px}
+  .card-links{margin-top:16px;display:flex;gap:14px;font-family:var(--mono);font-size:.8rem}
+
+  /* Skills */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+  .skill-cat{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+  .skill-cat h4{font-family:var(--mono);font-size:.82rem;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+  .skill-cat p{color:var(--text-dim);font-size:.88rem;line-height:1.7}
+
+  /* Education / Certs */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .ed-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px}
+  .ed-card h3{color:var(--text);font-size:1rem;margin-bottom:4px}
+  .ed-card .school{color:var(--accent);font-family:var(--mono);font-size:.85rem;margin-bottom:6px}
+  .ed-card .date{font-family:var(--mono);font-size:.75rem;color:var(--text-dim);margin-bottom:10px;display:block}
+  .ed-card p{color:var(--text-dim);font-size:.88rem}
+  .cert-list{list-style:none;margin-top:10px}
+  .cert-list li{font-family:var(--mono);font-size:.85rem;color:var(--text-dim);padding:10px 0;border-bottom:1px dashed var(--border);display:flex;justify-content:space-between;gap:10px}
+  .cert-list li span:first-child{color:var(--text)}
+
+  /* Contact */
+  .contact-box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:44px;text-align:center}
+  .contact-box h2{font-family:var(--mono);font-size:1.6rem;margin-bottom:12px}
+  .contact-box p{color:var(--text-dim);max-width:480px;margin:0 auto 26px}
+  .contact-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+
+  footer{padding:30px 0;text-align:center;color:var(--text-dim);font-family:var(--mono);font-size:.78rem;border-top:1px solid var(--border)}
+
+  @media(max-width:760px){
+    .navlinks{display:none}
+    .about-grid,.projects,.split{grid-template-columns:1fr}
+    .hero{padding:80px 0 60px}
+    section{padding:50px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">&gt; <span>shubham@devops</span></div>
+    <ul class="navlinks">
+      <li><a href="#about"><span class="num">01.</span>About</a></li>
+      <li><a href="#experience"><span class="num">02.</span>Experience</a></li>
+      <li><a href="#projects"><span class="num">03.</span>Projects</a></li>
+      <li><a href="#skills"><span class="num">04.</span>Skills</a></li>
+      <li><a href="#education"><span class="num">05.</span>Education</a></li>
+      <li><a href="#contact"><span class="num">06.</span>Contact</a></li>
+    </ul>
+    <a class="btn btn-ghost" style="padding:8px 16px;font-size:.8rem" href="assets/Shubham_Limkar_CV.pdf" target="_blank" rel="noopener">Resume</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Dublin, Ireland · Available for full-time roles</div>
+    <h1>Shubham Limkar<span class="accent">.</span></h1>
+    <div class="role">DevOps &amp; Site Reliability Engineer</div>
+    <p class="summary">
+      DevOps &amp; SRE with an MSc in Computer Science from University College Dublin and 4+ years of experience
+      building cloud-native applications, microservices, and distributed systems. I work across AWS, Azure,
+      Docker, Kubernetes, and Terraform to design scalable infrastructure, tighten CI/CD pipelines, and ship
+      production-ready systems.
+    </p>
+    <div class="badges">
+      <span class="badge">AWS</span>
+      <span class="badge">Azure</span>
+      <span class="badge">Kubernetes</span>
+      <span class="badge">Terraform</span>
+      <span class="badge">Python</span>
+      <span class="badge">CI/CD</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="assets/Shubham_Limkar_CV.pdf" target="_blank" rel="noopener">Download Résumé</a>
+      <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+      <a class="btn btn-ghost" href="https://github.com/srlimkar29" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-head"><h2><span class="idx">01.</span> About</h2><div class="line"></div></div>
+    <div class="about-grid">
+      <div>
+        <p>
+          I'm a DevOps engineer with production experience keeping large-scale, high-traffic platforms
+          reliable — most recently maintaining 50+ interconnected microservices serving 1M+ users at
+          Vodafone Intelligent Solutions, with 99.9% uptime across Vodafone UK, VOXI, and VBP digital channels.
+        </p>
+        <p>
+          My focus is the full lifecycle: provisioning infrastructure as code, building CI/CD pipelines that
+          hold up under real release pressure, and instrumenting systems so incidents get caught — and
+          understood — before they become outages.
+        </p>
+      </div>
+      <ul class="facts">
+        <li><span>Location</span><span>Dublin, Ireland</span></li>
+        <li><span>Work Authorization</span><span>Eligible full-time (Stamp 1G)</span></li>
+        <li><span>Experience</span><span>4+ years</span></li>
+        <li><span>Education</span><span>MSc CS, University College Dublin</span></li>
+        <li><span>Email</span><span><a href="mailto:shubham.limkar@yahoo.com">shubham.limkar@yahoo.com</a></span></li>
+        <li><span>LinkedIn</span><span><a href="https://www.linkedin.com/in/srlimkar" target="_blank" rel="noopener">in/srlimkar</a></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head"><h2><span class="idx">02.</span> Experience</h2><div class="line"></div></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-head">
+          <div><span class="tl-role">DevOps Engineer</span> · <span class="tl-company">Vodafone Intelligent Solutions</span></div>
+          <div class="tl-date">Jan 2020 – Aug 2024</div>
+        </div>
+        <ul>
+          <li>Monitored and maintained AWS infrastructure and 50+ interconnected microservices supporting Vodafone UK, VOXI, and VBP digital channels serving 1M+ users, sustaining 99.9% uptime using Datadog, Splunk, PagerDuty, and CloudWatch.</li>
+          <li>Reduced mean time to recover on high-severity P1/P2 incidents by leading end-to-end triage, root cause analysis, and blameless post-mortems across Dev, QA, and Security teams while maintaining agreed SLIs and SLOs.</li>
+          <li>Improved deployment consistency and release velocity across the DAL microservices platform by building and managing CI/CD pipelines with Azure DevOps and Terraform.</li>
+          <li>Reduced manual operational workload during infrastructure scaling and migration by writing Python and Shell automation, shifting routine operations left.</li>
+          <li>Supported production readiness and capacity planning for the TBYB launch on PAYG Plus, provisioning and monitoring eSIM infrastructure for a Glastonbury festival event with a 15,000-order threshold.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-head">
+          <div><span class="tl-role">Retail Assistant</span> · <span class="tl-company">Primark (Penneys)</span></div>
+          <div class="tl-date">Nov 2025 – Jan 2026</div>
+        </div>
+        <ul>
+          <li>Worked part-time during MSc studies at UCD, gaining Irish work experience in a high-volume customer-facing environment.</li>
+          <li>Handled till operations, stock deliveries, and shop floor organisation as part of a large team.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head"><h2><span class="idx">03.</span> Projects</h2><div class="line"></div></div>
+    <div class="projects">
+      <div class="card">
+        <div class="card-top"><h3>SubLingo — Real-Time Subtitle Translation Platform</h3><span class="date">May – Aug 2025</span></div>
+        <p>
+          Cloud-native translation platform built with Microsoft Ireland: Azure Container Apps with
+          Kubernetes-based autoscaling, Azure API Management as gateway, and PostgreSQL for storage.
+          FastAPI + React microservices integrate Azure AI Translator and Speech Recognition for real-time
+          subtitle translation across 100+ languages, plus a Chrome extension (Manifest V3) capturing live
+          captions from YouTube, MS Teams, and Zoom at sub-720ms response times with 94% uptime SLO.
+        </p>
+        <div class="tags">
+          <span class="tag">Azure</span><span class="tag">Kubernetes</span><span class="tag">FastAPI</span>
+          <span class="tag">React</span><span class="tag">OAuth 2.0</span><span class="tag">GitHub Actions</span>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/srlimkar29/SubLingo" target="_blank" rel="noopener">Repo →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-top"><h3>AWS Cloud Ingestion &amp; Monitoring Platform</h3><span class="date">Apr – Jun 2023</span></div>
+        <p>
+          Multi-tier, highly available AWS infrastructure across two availability zones using reusable
+          Terraform modules. Serverless ingestion pipeline (API Gateway + Lambda) stores timestamped records
+          in DynamoDB behind a custom VPC with public/private subnets, NAT Gateways, and an ALB for
+          multi-AZ redundancy. Least-privilege IAM throughout, Terraform state in S3 with AES-256 encryption.
+        </p>
+        <div class="tags">
+          <span class="tag">AWS Lambda</span><span class="tag">API Gateway</span><span class="tag">DynamoDB</span>
+          <span class="tag">Terraform</span><span class="tag">VPC</span><span class="tag">IAM</span>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/srlimkar29/Timestamp" target="_blank" rel="noopener">Repo →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-top"><h3>Distributed Event Management System</h3><span class="date">Personal Project</span></div>
+        <p>
+          Microservices platform for event registration, ticketing, and real-time attendee notifications.
+          Three containerized services — registration, ticketing, and user engagement — communicate over
+          REST APIs and WebSockets, backed by AWS DynamoDB and orchestrated with Kubernetes.
+        </p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Docker</span>
+          <span class="tag">Kubernetes</span><span class="tag">DynamoDB</span><span class="tag">WebSockets</span>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/srlimkar29/Distributed-Event-Management" target="_blank" rel="noopener">Repo →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-top"><h3>ETL / DB Pipeline Project</h3><span class="date">Personal Project</span></div>
+        <p>
+          Shell-scripted ETL workflow for extracting, transforming, and loading data into a relational
+          database — built to practice pipeline automation and database operations outside a managed
+          cloud service.
+        </p>
+        <div class="tags">
+          <span class="tag">Shell</span><span class="tag">SQL</span><span class="tag">ETL</span>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/srlimkar29/ETL-DB-Project" target="_blank" rel="noopener">Repo →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head"><h2><span class="idx">04.</span> Skills</h2><div class="line"></div></div>
+    <div class="skills-grid">
+      <div class="skill-cat"><h4>Cloud Platforms</h4><p>Amazon Web Services (EC2, Lambda, S3, DynamoDB, VPC, IAM), Microsoft Azure (Container Apps, API Management, AI Services)</p></div>
+      <div class="skill-cat"><h4>Containerization</h4><p>Docker, Kubernetes, Helm</p></div>
+      <div class="skill-cat"><h4>CI/CD &amp; IaC</h4><p>Azure DevOps, GitHub Actions, Jenkins, Terraform, Ansible</p></div>
+      <div class="skill-cat"><h4>Monitoring &amp; Observability</h4><p>Datadog, PagerDuty, Splunk, CloudWatch, Prometheus, Grafana</p></div>
+      <div class="skill-cat"><h4>Languages &amp; Databases</h4><p>Python, C, C++, Shell Scripting, SQL, PostgreSQL, MongoDB</p></div>
+      <div class="skill-cat"><h4>Networking &amp; Security</h4><p>TCP/IP, DNS, HTTP/S, Load Balancers, Security Groups, GDPR, IAM</p></div>
+      <div class="skill-cat"><h4>ITSM &amp; Practices</h4><p>Jira, BMC Remedy/Helix, ITIL, SLI/SLO, Incident Response, Root Cause Analysis</p></div>
+      <div class="skill-cat"><h4>Operating Systems</h4><p>Linux, Windows</p></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head"><h2><span class="idx">05.</span> Education &amp; Certifications</h2><div class="line"></div></div>
+    <div class="split">
+      <div class="ed-card">
+        <h3>MSc in Computer Science</h3>
+        <div class="school">University College Dublin</div>
+        <span class="date">September 2024 – August 2025</span>
+        <p>Upper Second Class Honours. Collaborated with Microsoft Ireland to design and deploy SubLingo, a real-time cloud-native translation platform built on Azure.</p>
+      </div>
+      <div class="ed-card">
+        <h3>Bachelor of Engineering (Computer)</h3>
+        <div class="school">Trinity Academy of Engineering</div>
+        <span class="date">June 2019 – August 2022</span>
+        <p>GPA: 8.55 / 10</p>
+      </div>
+    </div>
+    <ul class="cert-list" style="margin-top:22px">
+      <li><span>Certified AWS Solutions Architect – Associate</span><span>2026</span></li>
+      <li><span>Certified AWS Cloud Practitioner</span><span>2026</span></li>
+      <li><span>Certified Oracle Cloud Infrastructure Foundations Associate</span><span>2025</span></li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <div class="contact-box">
+      <h2>Let's talk<span class="accent">.</span></h2>
+      <p>Open to full-time DevOps, SRE, and Cloud Engineering roles in Ireland. Reach out via email or LinkedIn — I'll get back to you.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:shubham.limkar@yahoo.com">Email Me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/srlimkar" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/srlimkar29" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="tel:+353899590615">+353 89 959 0615</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Built by Shubham Limkar · <span id="year"></span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+name: Deploy
+
+# Does nothing until the repository variable DEPLOY_ENABLED is set to "true"
+# (after the Azure Static Web App exists and its token is saved as a secret).
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy:
+    if: vars.DEPLOY_ENABLED == 'true' && github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: site
+          skip_app_build: true
+      - name: Smoke test
+        if: github.event_name == 'push'
+        run: curl --fail --silent --show-error --retry 5 --retry-delay 10 -o /dev/null "${{ vars.SITE_URL }}"
+
+  close-preview:
+    if: vars.DEPLOY_ENABLED == 'true' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: close
