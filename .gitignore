@@ -1,0 +1,5 @@
+# Terraform state holds the deploy token: never commit it
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
