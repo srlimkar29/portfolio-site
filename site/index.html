@@ -20,6 +20,14 @@
     --mono:'JetBrains Mono','Fira Code',Consolas,'Courier New',monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     --maxw:960px;
+    --header:rgba(10,14,20,.85);
+    --on-accent:#04120c;
+  }
+  :root[data-theme=light]{
+    --bg:#f6f8fa;--bg-alt:#fff;--panel:#fff;--border:#d8dee4;
+    --text:#1f2328;--text-dim:#57606a;
+    --accent:#00795a;--accent-dim:#00a377;--accent-glow:rgba(0,163,119,.1);
+    --header:rgba(246,248,250,.85);--on-accent:#fff;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -42,7 +50,7 @@
   /* Nav */
   header{
     position:sticky;top:0;z-index:50;
-    background:rgba(10,14,20,.85);
+    background:var(--header);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
   }
@@ -67,7 +75,7 @@
   .badge{font-family:var(--mono);font-size:.78rem;color:var(--accent);border:1px solid var(--accent-dim);padding:4px 10px;border-radius:20px;background:var(--accent-glow)}
   .hero-cta{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap}
   .btn{font-family:var(--mono);font-size:.9rem;padding:12px 22px;border-radius:8px;border:1px solid var(--accent-dim);transition:all .2s}
-  .btn-primary{background:var(--accent);color:#04120c;font-weight:600}
+  .btn-primary{background:var(--accent);color:var(--on-accent);font-weight:600}
   .btn-primary:hover{background:var(--accent-dim);text-decoration:none;transform:translateY(-1px)}
   .btn-ghost{color:var(--text);border-color:var(--border)}
   .btn-ghost:hover{border-color:var(--accent-dim);color:var(--accent);text-decoration:none}
@@ -136,7 +144,45 @@
 
   footer{padding:30px 0;text-align:center;color:var(--text-dim);font-family:var(--mono);font-size:.78rem;border-top:1px solid var(--border)}
 
+  /* Theme toggle */
+  .nav-right{display:flex;gap:10px;align-items:center}
+  .icon-btn{background:none;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 11px;font-family:var(--mono);font-size:.8rem;cursor:pointer}
+  .icon-btn:hover{border-color:var(--accent-dim);color:var(--accent)}
+
+  /* Terminal */
+  .term{margin-top:40px;background:var(--panel);border:1px solid var(--border);border-radius:10px;font-family:var(--mono);font-size:.84rem;max-width:760px}
+  .term-grid{display:grid;grid-template-columns:1fr 170px}
+  .term-cmds{display:flex;flex-direction:column;gap:6px;padding:14px;border-left:1px solid var(--border);color:var(--text-dim);font-size:.72rem}
+  .term-cmds button{font:inherit;font-size:.78rem;text-align:left;color:var(--accent);background:var(--accent-glow);border:1px solid transparent;border-radius:5px;padding:5px 9px;cursor:pointer}
+  .term-cmds button:hover,.term-cmds button:focus-visible{border-color:var(--accent-dim)}
+  .term-bar{padding:8px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);font-size:.75rem}
+  .term-body{padding:14px}
+  #term-out{white-space:pre-wrap;color:var(--text-dim);max-height:220px;overflow:auto;font-family:inherit}
+  .term-line{display:flex;gap:8px;align-items:center;color:var(--accent)}
+  #term-in{flex:1;background:none;border:0;outline:0;color:var(--text);font:inherit}
+  #term-in:focus-visible{outline:1px dashed var(--accent-dim);outline-offset:3px}
+
+  /* Flow diagrams */
+  .card.wide{grid-column:1/-1}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;row-gap:10px;margin:4px 0 16px;font-family:var(--mono);font-size:.74rem}
+  .node{border:1px solid var(--accent-dim);background:var(--accent-glow);color:var(--text);padding:8px 10px;border-radius:8px;text-align:center}
+  .node small{display:block;color:var(--text-dim);font-size:.68rem}
+  .pipe{flex:1 0 24px;max-width:56px;height:2px;background:var(--border);position:relative;overflow:hidden}
+  .pipe::after{content:'';position:absolute;inset:0 auto 0 0;width:12px;background:var(--accent);animation:flow 1.6s linear infinite}
+  @keyframes flow{from{transform:translateX(-12px)}to{transform:translateX(56px)}}
+
+  /* Scroll reveal (class added by JS, so the page works without it) */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .pipe::after{display:none}
+    html{scroll-behavior:auto}
+  }
+
   @media(max-width:760px){
+    .term-grid{grid-template-columns:1fr}
+    .term-cmds{flex-direction:row;flex-wrap:wrap;border-left:0;border-top:1px solid var(--border)}
     .navlinks{display:none}
     .about-grid,.projects,.split{grid-template-columns:1fr}
     .hero{padding:80px 0 60px}
@@ -155,9 +201,13 @@
       <li><a href="#projects"><span class="num">03.</span>Projects</a></li>
       <li><a href="#skills"><span class="num">04.</span>Skills</a></li>
       <li><a href="#education"><span class="num">05.</span>Education</a></li>
-      <li><a href="#contact"><span class="num">06.</span>Contact</a></li>
+      <li><a href="#build"><span class="num">06.</span>Pipeline</a></li>
+      <li><a href="#contact"><span class="num">07.</span>Contact</a></li>
     </ul>
-    <a class="btn btn-ghost" style="padding:8px 16px;font-size:.8rem" href="assets/Shubham_Limkar_CV.pdf" target="_blank" rel="noopener">Resume</a>
+    <div class="nav-right">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch between light and dark theme">◐</button>
+      <a class="btn btn-ghost" style="padding:8px 16px;font-size:.8rem" href="assets/Shubham_Limkar_CV.pdf" target="_blank" rel="noopener">Resume</a>
+    </div>
   </nav>
 </header>
 
@@ -185,6 +235,26 @@
       <a class="btn btn-ghost" href="#contact">Get in Touch</a>
       <a class="btn btn-ghost" href="https://github.com/srlimkar29" target="_blank" rel="noopener">GitHub</a>
     </div>
+    <div class="term">
+      <div class="term-bar">shubham@devops: ~ — type a command or click one</div>
+      <div class="term-grid">
+      <div class="term-body">
+        <pre id="term-out" aria-live="polite"></pre>
+        <label class="term-line">$ <input id="term-in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal command" placeholder="help"></label>
+      </div>
+      <div class="term-cmds">
+        <span>No typing needed — click one:</span>
+        <button type="button" data-cmd="whoami">whoami</button>
+        <button type="button" data-cmd="experience">experience</button>
+        <button type="button" data-cmd="projects">projects</button>
+        <button type="button" data-cmd="skills">skills</button>
+        <button type="button" data-cmd="certs">certs</button>
+        <button type="button" data-cmd="contact">contact</button>
+        <button type="button" data-cmd="resume">resume</button>
+        <button type="button" data-cmd="clear">clear</button>
+      </div>
+      </div>
+    </div>
   </section>
 
   <section id="about">
@@ -194,7 +264,7 @@
         <p>
           I'm a DevOps engineer with production experience keeping large-scale, high-traffic platforms
           reliable — most recently maintaining 50+ interconnected microservices serving 1M+ users at
-          Vodafone Intelligent Solutions, with 99.9% uptime across Vodafone UK, VOXI, and VBP digital channels.
+          Vodafone, with 99.9% uptime across Vodafone UK, VOXI, and VBP digital channels.
         </p>
         <p>
           My focus is the full lifecycle: provisioning infrastructure as code, building CI/CD pipelines that
@@ -218,25 +288,26 @@
     <div class="timeline">
       <div class="tl-item">
         <div class="tl-head">
-          <div><span class="tl-role">DevOps Engineer</span> · <span class="tl-company">Vodafone Intelligent Solutions</span></div>
+          <div><span class="tl-role">DevOps Engineer</span> · <span class="tl-company">Vodafone</span></div>
           <div class="tl-date">Jan 2020 – Aug 2024</div>
         </div>
         <ul>
-          <li>Monitored and maintained AWS infrastructure and 50+ interconnected microservices supporting Vodafone UK, VOXI, and VBP digital channels serving 1M+ users, sustaining 99.9% uptime using Datadog, Splunk, PagerDuty, and CloudWatch.</li>
-          <li>Reduced mean time to recover on high-severity P1/P2 incidents by leading end-to-end triage, root cause analysis, and blameless post-mortems across Dev, QA, and Security teams while maintaining agreed SLIs and SLOs.</li>
-          <li>Improved deployment consistency and release velocity across the DAL microservices platform by building and managing CI/CD pipelines with Azure DevOps and Terraform.</li>
-          <li>Reduced manual operational workload during infrastructure scaling and migration by writing Python and Shell automation, shifting routine operations left.</li>
-          <li>Supported production readiness and capacity planning for the TBYB launch on PAYG Plus, provisioning and monitoring eSIM infrastructure for a Glastonbury festival event with a 15,000-order threshold.</li>
+          <li>Managed and optimised AWS and Azure infrastructure and 50+ interconnected microservices supporting Vodafone UK, VOXI and VBP digital channels serving 1M+ users, sustaining 99.9% uptime using Datadog, Splunk, PagerDuty and CloudWatch.</li>
+          <li>Reduced MTTR on high-severity P1/P2 incidents by leading end-to-end triage, RCA and blameless post-mortems, working across Dev, QA and Security teams to maintain agreed SLIs and SLOs.</li>
+          <li>Improved deployment consistency and release velocity across the microservices platform by building and managing CI/CD pipelines using Azure DevOps and Terraform.</li>
+          <li>Supported migration of legacy infrastructure components to AWS, validating environment parity and minimising service disruption during transition.</li>
+          <li>Reduced manual operational workload during infrastructure scaling and migration by writing Python and Shell scripts to automate repetitive tasks.</li>
+          <li>Supported production readiness and capacity planning for the TBYB product launch on PAYG Plus, provisioning and monitoring eSIM infrastructure for a Glastonbury festival event with a 15,000-order threshold.</li>
         </ul>
       </div>
       <div class="tl-item">
         <div class="tl-head">
-          <div><span class="tl-role">Retail Assistant</span> · <span class="tl-company">Primark (Penneys)</span></div>
-          <div class="tl-date">Nov 2025 – Jan 2026</div>
+          <div><span class="tl-role">Customer Support Associate</span> · <span class="tl-company">Dunnes Stores</span></div>
+          <div class="tl-date">Nov 2025 – Present</div>
         </div>
         <ul>
-          <li>Worked part-time during MSc studies at UCD, gaining Irish work experience in a high-volume customer-facing environment.</li>
-          <li>Handled till operations, stock deliveries, and shop floor organisation as part of a large team.</li>
+          <li>Monitor the live order management dashboard, tracking hourly fulfilment volumes, customer allocations and delivery sequencing across a high-volume Click &amp; Collect operation.</li>
+          <li>Prepare weekly operational reports for senior management covering order completion rates, throughput metrics and team performance data.</li>
         </ul>
       </div>
     </div>
@@ -245,8 +316,15 @@
   <section id="projects">
     <div class="section-head"><h2><span class="idx">03.</span> Projects</h2><div class="line"></div></div>
     <div class="projects">
-      <div class="card">
+      <div class="card wide">
         <div class="card-top"><h3>SubLingo — Real-Time Subtitle Translation Platform</h3><span class="date">May – Aug 2025</span></div>
+        <div class="flow" role="img" aria-label="Request flow: Chrome extension to API Management to Container Apps to Azure AI and PostgreSQL">
+          <div class="node">Chrome extension<small>YouTube · Teams · Zoom</small></div><div class="pipe"></div>
+          <div class="node">API Management<small>gateway · OAuth 2.0</small></div><div class="pipe"></div>
+          <div class="node">Container Apps<small>FastAPI · autoscaling</small></div><div class="pipe"></div>
+          <div class="node">Azure AI<small>Speech · Translator</small></div><div class="pipe"></div>
+          <div class="node">PostgreSQL<small>storage</small></div>
+        </div>
         <p>
           Cloud-native translation platform built with Microsoft Ireland: Azure Container Apps with
           Kubernetes-based autoscaling, Azure API Management as gateway, and PostgreSQL for storage.
@@ -262,8 +340,14 @@
           <a href="https://github.com/srlimkar29/SubLingo" target="_blank" rel="noopener">Repo →</a>
         </div>
       </div>
-      <div class="card">
+      <div class="card wide">
         <div class="card-top"><h3>AWS Cloud Ingestion &amp; Monitoring Platform</h3><span class="date">Apr – Jun 2023</span></div>
+        <div class="flow" role="img" aria-label="Request flow: client to API Gateway to Lambda to DynamoDB">
+          <div class="node">Client<small>HTTPS</small></div><div class="pipe"></div>
+          <div class="node">API Gateway<small>ingest endpoint</small></div><div class="pipe"></div>
+          <div class="node">Lambda<small>Python</small></div><div class="pipe"></div>
+          <div class="node">DynamoDB<small>timestamped records</small></div>
+        </div>
         <p>
           Multi-tier, highly available AWS infrastructure across two availability zones using reusable
           Terraform modules. Serverless ingestion pipeline (API Gateway + Lambda) stores timestamped records
@@ -278,49 +362,22 @@
           <a href="https://github.com/srlimkar29/Timestamp" target="_blank" rel="noopener">Repo →</a>
         </div>
       </div>
-      <div class="card">
-        <div class="card-top"><h3>Distributed Event Management System</h3><span class="date">Personal Project</span></div>
-        <p>
-          Microservices platform for event registration, ticketing, and real-time attendee notifications.
-          Three containerized services — registration, ticketing, and user engagement — communicate over
-          REST APIs and WebSockets, backed by AWS DynamoDB and orchestrated with Kubernetes.
-        </p>
-        <div class="tags">
-          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Docker</span>
-          <span class="tag">Kubernetes</span><span class="tag">DynamoDB</span><span class="tag">WebSockets</span>
-        </div>
-        <div class="card-links">
-          <a href="https://github.com/srlimkar29/Distributed-Event-Management" target="_blank" rel="noopener">Repo →</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-top"><h3>ETL / DB Pipeline Project</h3><span class="date">Personal Project</span></div>
-        <p>
-          Shell-scripted ETL workflow for extracting, transforming, and loading data into a relational
-          database — built to practice pipeline automation and database operations outside a managed
-          cloud service.
-        </p>
-        <div class="tags">
-          <span class="tag">Shell</span><span class="tag">SQL</span><span class="tag">ETL</span>
-        </div>
-        <div class="card-links">
-          <a href="https://github.com/srlimkar29/ETL-DB-Project" target="_blank" rel="noopener">Repo →</a>
-        </div>
-      </div>
     </div>
   </section>
 
   <section id="skills">
     <div class="section-head"><h2><span class="idx">04.</span> Skills</h2><div class="line"></div></div>
     <div class="skills-grid">
-      <div class="skill-cat"><h4>Cloud Platforms</h4><p>Amazon Web Services (EC2, Lambda, S3, DynamoDB, VPC, IAM), Microsoft Azure (Container Apps, API Management, AI Services)</p></div>
-      <div class="skill-cat"><h4>Containerization</h4><p>Docker, Kubernetes, Helm</p></div>
+      <div class="skill-cat"><h4>Cloud Platforms</h4><p>Amazon Web Services, Microsoft Azure</p></div>
+      <div class="skill-cat"><h4>Containerization</h4><p>Docker, Kubernetes</p></div>
       <div class="skill-cat"><h4>CI/CD &amp; IaC</h4><p>Azure DevOps, GitHub Actions, Jenkins, Terraform, Ansible</p></div>
-      <div class="skill-cat"><h4>Monitoring &amp; Observability</h4><p>Datadog, PagerDuty, Splunk, CloudWatch, Prometheus, Grafana</p></div>
-      <div class="skill-cat"><h4>Languages &amp; Databases</h4><p>Python, C, C++, Shell Scripting, SQL, PostgreSQL, MongoDB</p></div>
-      <div class="skill-cat"><h4>Networking &amp; Security</h4><p>TCP/IP, DNS, HTTP/S, Load Balancers, Security Groups, GDPR, IAM</p></div>
-      <div class="skill-cat"><h4>ITSM &amp; Practices</h4><p>Jira, BMC Remedy/Helix, ITIL, SLI/SLO, Incident Response, Root Cause Analysis</p></div>
-      <div class="skill-cat"><h4>Operating Systems</h4><p>Linux, Windows</p></div>
+      <div class="skill-cat"><h4>Monitoring</h4><p>Datadog, PagerDuty, Splunk, CloudWatch, Prometheus, Grafana</p></div>
+      <div class="skill-cat"><h4>Languages &amp; Databases</h4><p>Python, C, C++, Shell Scripting, SQL, MongoDB</p></div>
+      <div class="skill-cat"><h4>Networking</h4><p>TCP/IP, DNS, HTTP/S, VPC, Load Balancers, Security Groups, SSL/TLS</p></div>
+      <div class="skill-cat"><h4>Security &amp; Compliance</h4><p>GDPR, IAM</p></div>
+      <div class="skill-cat"><h4>ITSM &amp; Ticketing</h4><p>Jira, Confluence, BMC Remedy/Helix</p></div>
+      <div class="skill-cat"><h4>Practices</h4><p>ITIL, SLI/SLO, Incident Response, RCA</p></div>
+      <div class="skill-cat"><h4>Operating Systems</h4><p>Windows, Linux</p></div>
     </div>
   </section>
 
@@ -331,20 +388,32 @@
         <h3>MSc in Computer Science</h3>
         <div class="school">University College Dublin</div>
         <span class="date">September 2024 – August 2025</span>
-        <p>Upper Second Class Honours. Collaborated with Microsoft Ireland to design and deploy SubLingo, a real-time cloud-native translation platform built on Azure.</p>
+        <p>GPA: 3.39 / 4. Collaborated with Microsoft Ireland to design and deploy SubLingo, a real-time cloud-native translation platform built on Azure.</p>
       </div>
-      <div class="ed-card">
-        <h3>Bachelor of Engineering (Computer)</h3>
-        <div class="school">Trinity Academy of Engineering</div>
-        <span class="date">June 2019 – August 2022</span>
-        <p>GPA: 8.55 / 10</p>
-      </div>
+      <ul class="cert-list">
+        <li><span>AWS Certified Solutions Architect – Associate</span></li>
+        <li><span>AWS Certified Cloud Practitioner</span></li>
+        <li><span>Microsoft Certified: Azure Administrator Associate</span></li>
+      </ul>
     </div>
-    <ul class="cert-list" style="margin-top:22px">
-      <li><span>Certified AWS Solutions Architect – Associate</span><span>2026</span></li>
-      <li><span>Certified AWS Cloud Practitioner</span><span>2026</span></li>
-      <li><span>Certified Oracle Cloud Infrastructure Foundations Associate</span><span>2025</span></li>
-    </ul>
+  </section>
+
+  <section id="build">
+    <div class="section-head"><h2><span class="idx">06.</span> How this site ships</h2><div class="line"></div></div>
+    <div class="flow" role="img" aria-label="Pipeline: git push, CI checks, Terraform, deploy to Azure, smoke test">
+      <div class="node">git push</div><div class="pipe"></div>
+      <div class="node">CI<small>lint · links · gitleaks · Trivy</small></div><div class="pipe"></div>
+      <div class="node">Terraform<small>fmt · validate</small></div><div class="pipe"></div>
+      <div class="node">Deploy<small>Azure Static Web Apps</small></div><div class="pipe"></div>
+      <div class="node">Smoke test</div>
+    </div>
+    <ul class="facts">
+        <li><span>Hosting</span><span>Azure Static Web Apps (Free)</span></li>
+        <li><span>Infrastructure</span><span>Terraform</span></li>
+        <li><span>CI/CD</span><span>GitHub Actions</span></li>
+        <li><span>Monthly cost</span><span>€0</span></li>
+        <li><span>Source</span><span><a href="https://github.com/srlimkar29/portfolio-site" target="_blank" rel="noopener">srlimkar29/portfolio-site</a></span></li>
+      </ul>
   </section>
 
   <section id="contact">
@@ -367,6 +436,70 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Theme: remembered per browser; storage can be blocked, so it is optional
+  const root = document.documentElement;
+  const toggleTheme = () => {
+    const t = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = t;
+    try { localStorage.setItem('theme', t); } catch (e) {}
+    return 'theme: ' + t;
+  };
+  try { if (localStorage.getItem('theme') === 'light') root.dataset.theme = 'light'; } catch (e) {}
+  $('#theme').onclick = toggleTheme;
+
+  // Terminal: answers are read from the page itself, so content lives in one place
+  const clean = e => e.textContent.trim().replace(/\s+/g, ' ');
+  const rows = sel => $$(sel).map(e => [...e.children].map(clean).join('  —  ')).join('\n');
+  const sections = ['about', 'experience', 'projects', 'skills', 'education', 'build', 'contact'];
+  const out = $('#term-out'), inp = $('#term-in');
+  const cmds = {
+    help: () => 'whoami · ls · about · experience · projects · skills · certs · contact · resume · theme · clear\n(cd <section> jumps there)',
+    whoami: () => clean($('.role')) + ' · ' + clean($('.eyebrow')),
+    ls: () => sections.join('  '),
+    about: () => $$('#about p').map(clean).join('\n\n'),
+    experience: () => rows('.tl-head'),
+    projects: () => $$('.card h3').map(e => '• ' + clean(e)).join('\n'),
+    skills: () => rows('.skill-cat'),
+    certs: () => rows('.cert-list li'),
+    education: () => rows('.ed-card'),
+    contact: () => rows('#about .facts li'),
+    build: () => rows('#build .facts li'),
+    resume: () => { window.open('assets/Shubham_Limkar_CV.pdf', '_blank', 'noopener'); return 'opening résumé…'; },
+    theme: toggleTheme,
+    clear: () => { out.textContent = ''; return ''; }
+  };
+  const run = raw => {
+    const jump = /^cd\s+/.test(raw);
+    const c = raw.toLowerCase().replace(/^(cat|cd|open|kubectl get)\s+/, '').replace(/^\W+|\W+$/g, '');
+    if (/^sudo\b/.test(c)) return 'permission denied: nice try';
+    if (jump && sections.includes(c)) { $('#' + c).scrollIntoView(); return 'cd ' + c; }
+    return cmds[c] ? cmds[c]() : 'command not found: ' + raw + ' — type help';
+  };
+  const exec = raw => {
+    const res = run(raw);
+    if (res) out.textContent += '$ ' + raw + '\n' + res + '\n\n';
+    out.scrollTop = out.scrollHeight;
+  };
+  inp.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' || !inp.value.trim()) return;
+    exec(inp.value.trim());
+    inp.value = '';
+  });
+  $$('.term-cmds button').forEach(b => b.onclick = () => exec(b.dataset.cmd));
+  console.assert(run('kubectl get skills').includes('Docker') && run('nope').startsWith('command not found'), 'terminal self-check failed');
+
+  // Scroll reveal
+  if (!reduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }), { threshold: .08 });
+    $$('main section:not(.hero)').forEach(el => { el.classList.add('reveal'); io.observe(el); });
+  }
 </script>
 </body>
 </html>
