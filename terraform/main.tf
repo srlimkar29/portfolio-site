@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 4.0"
+      version = "~> 5.14"
     }
   }
   # shortcut: local state, applied by hand once. Move to HCP Terraform (free)
