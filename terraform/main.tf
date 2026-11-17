@@ -36,9 +36,10 @@ resource "azurerm_resource_group" "site" {
 resource "azurerm_static_web_app" "site" {
   name                = var.name
   resource_group_name = azurerm_resource_group.site.name
-  location            = azurerm_resource_group.site.location
-  sku_tier            = "Free"
-  sku_size            = "Free"
+  # West Europe rejects new subscriptions for Static Web Apps; content is served globally anyway.
+  location = "eastus2"
+  sku_tier = "Free"
+  sku_size = "Free"
 }
 
 output "site_url" {
