@@ -1,5 +1,6 @@
 # Portfolio site
 
+n**Live:** https://kind-dune-0c3cac10f.5.azurestaticapps.net
 Static portfolio hosted on Azure Static Web Apps (Free plan), provisioned with
 Terraform and shipped by GitHub Actions.
 
